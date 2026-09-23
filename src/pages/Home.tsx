@@ -1,3 +1,3 @@
-export default function App() {
+export default function Home() {
   return <div>hi, tripiece</div>;
 }

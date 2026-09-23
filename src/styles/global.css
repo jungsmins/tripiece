@@ -1,0 +1,18 @@
+@layer reset;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family:
+    Pretendard,
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}

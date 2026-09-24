@@ -1,4 +1,10 @@
-import type { Piece, Connection } from './piece';
+import type { Piece } from './piece';
+
+export type Connection = {
+  id: string;
+  fromPieceId: string;
+  toPieceId: string;
+};
 
 export type Plan = {
   id: string;

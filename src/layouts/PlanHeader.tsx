@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router';
+
 import * as styles from './PlanHeader.css';
 
 export default function PlanHeader() {
@@ -8,12 +9,12 @@ export default function PlanHeader() {
         <Link to="/dashboard" className={styles.backToLink}>
           ← 대시보드
         </Link>
-        <h1 className={styles.Title}>여행 계획</h1>
-        <nav className={styles.Navigation}>
+        <h1 className={styles.title}>여행 계획</h1>
+        <nav className={styles.navigation}>
           <NavLink
             to="canvas"
             className={({ isActive }) =>
-              isActive ? `${styles.Link} ${styles.activeLink}` : styles.Link
+              isActive ? `${styles.link} ${styles.activeLink}` : styles.link
             }
           >
             캔버스
@@ -21,7 +22,7 @@ export default function PlanHeader() {
           <NavLink
             to="timeline"
             className={({ isActive }) =>
-              isActive ? `${styles.Link} ${styles.activeLink}` : styles.Link
+              isActive ? `${styles.link} ${styles.activeLink}` : styles.link
             }
           >
             계획표
@@ -29,7 +30,7 @@ export default function PlanHeader() {
           <NavLink
             to="map"
             className={({ isActive }) =>
-              isActive ? `${styles.Link} ${styles.activeLink}` : styles.Link
+              isActive ? `${styles.link} ${styles.activeLink}` : styles.link
             }
           >
             지도

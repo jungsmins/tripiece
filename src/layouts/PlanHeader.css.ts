@@ -6,7 +6,6 @@ export const header = style({
   justifyContent: 'space-between',
 
   height: '61px',
-
   border: '1px solid #dddddd',
   padding: '10px 20px',
 });
@@ -19,35 +18,36 @@ export const headerLeft = style({
 
 export const backToLink = style({
   fontSize: '12px',
-  font: '#4E4B47',
+
+  color: '#4e4b47',
 
   ':hover': {
     textDecoration: 'underline',
   },
 });
 
-export const Title = style({
+export const title = style({
   fontWeight: 'bold',
 });
 
-export const Navigation = style({
+export const navigation = style({
   display: 'flex',
   alignItems: 'center',
 
-  border: '1px solid #D2CEC7',
+  border: '1px solid #d2cec7',
   borderRadius: '8px',
+
   overflow: 'hidden',
 });
 
-export const Link = style({
+export const link = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 
   width: '72px',
   height: '48px',
-
-  borderRight: '1px solid #D2CEC7',
+  borderRight: '1px solid #d2cec7',
 
   fontSize: '12px',
 
@@ -57,6 +57,6 @@ export const Link = style({
 });
 
 export const activeLink = style({
-  backgroundColor: '#F0EFEC',
+  backgroundColor: '#f0efec',
   fontWeight: 'bold',
 });

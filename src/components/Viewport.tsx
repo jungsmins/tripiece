@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { MAX_ZOOM, MIN_ZOOM, ZOOM_SENSITIVITY } from '@/constants/camera';
+import { ZOOM_SENSITIVITY } from '@/constants/camera';
 import type { Camera } from '@/types/camera';
-import { clamp } from '@/utils/math';
+import { zoomAt } from '@/utils/camera';
 
 import { World } from './World';
 import * as styles from './Viewport.css';
@@ -44,22 +44,24 @@ export function Viewport() {
   }
 
   useEffect(() => {
-    function handleWheel(e: WheelEvent) {
-      e.preventDefault();
-
-      const factor = 1 - e.deltaY * ZOOM_SENSITIVITY;
-
-      setCamera(prev => ({
-        ...prev,
-        zoom: clamp(prev.zoom * factor, MIN_ZOOM, MAX_ZOOM),
-      }));
-    }
-
     const viewportElement = viewportRef.current;
 
     if (!viewportElement) {
       return;
     }
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+
+      const viewportRect = viewportElement.getBoundingClientRect();
+      const viewportCoordinate = {
+        viewportX: e.clientX - viewportRect.left,
+        viewportY: e.clientY - viewportRect.top,
+      };
+      const factor = 1 - e.deltaY * ZOOM_SENSITIVITY;
+
+      setCamera(prev => zoomAt(prev, viewportCoordinate, factor));
+    };
 
     viewportElement.addEventListener('wheel', handleWheel, { passive: false });
 

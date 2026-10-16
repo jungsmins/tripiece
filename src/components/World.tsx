@@ -1,5 +1,6 @@
 import type { Camera } from '@/types/camera';
 
+import { Piece } from './Piece';
 import * as styles from './World.css';
 
 type WorldProps = {
@@ -15,6 +16,8 @@ export function World({ camera }: WorldProps) {
       style={{
         transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
       }}
-    />
+    >
+      <Piece zoom={zoom} />
+    </div>
   );
 }

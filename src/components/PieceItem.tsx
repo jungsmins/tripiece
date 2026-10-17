@@ -1,16 +1,17 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 
-import * as styles from './Piece.css';
+import { usePieceStore } from '@/stores/piece';
+import type { Piece } from '@/types/piece';
 
-type PieceProps = {
+import * as styles from './PieceItem.css';
+
+type PieceItemProps = {
+  pieceData: Piece;
   zoom: number;
 };
 
-export function Piece({ zoom }: PieceProps) {
-  const [position, setPosition] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
+export function PieceItem({ pieceData, zoom }: PieceItemProps) {
+  const movePiece = usePieceStore(state => state.movePiece);
   const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
 
   function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
@@ -31,10 +32,7 @@ export function Piece({ zoom }: PieceProps) {
     const deltaY = (e.clientY - lastPointer.y) / zoom;
     lastPointerRef.current = { x: e.clientX, y: e.clientY };
 
-    setPosition(prev => ({
-      x: prev.x + deltaX,
-      y: prev.y + deltaY,
-    }));
+    movePiece(pieceData.id, { x: deltaX, y: deltaY });
   }
 
   function handleLostPointerCapture() {
@@ -44,23 +42,23 @@ export function Piece({ zoom }: PieceProps) {
   return (
     <div
       className={styles.piece}
-      data-piece
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onLostPointerCapture={handleLostPointerCapture}
-      style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+      style={{
+        transform: `translate(${pieceData.position.x}px, ${pieceData.position.y}px)`,
+      }}
     >
       <div className={styles.pieceHeader}>
-        <div className={styles.pieceType}>타입</div>
-        <p className={styles.pieceMode}>종류</p>
+        <div className={styles.pieceType}>{pieceData.type}</div>
+        <p className={styles.pieceMode}>{pieceData.location?.kind}</p>
       </div>
       <div className={styles.pieceMain}>
-        <div className={styles.pieceTitle}>제목</div>
+        <div className={styles.pieceTitle}>{pieceData.title}</div>
         <p className={styles.pieceContent}>설명</p>
       </div>
       <div className={styles.pieceFooter}>
-        <p className={styles.pieceStartedAt}>시작시간</p>
-        <p className={styles.pieceDuration}>소요시간</p>
+        <p className={styles.pieceDuration}>{pieceData.durationMinutes}</p>
       </div>
     </div>
   );

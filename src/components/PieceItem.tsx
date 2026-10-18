@@ -28,11 +28,13 @@ export function PieceItem({ pieceData, zoom }: PieceItemProps) {
       return;
     }
 
-    const deltaX = (e.clientX - lastPointer.x) / zoom;
-    const deltaY = (e.clientY - lastPointer.y) / zoom;
+    const worldDelta = {
+      x: (e.clientX - lastPointer.x) / zoom,
+      y: (e.clientY - lastPointer.y) / zoom,
+    };
     lastPointerRef.current = { x: e.clientX, y: e.clientY };
 
-    movePiece(pieceData.id, { x: deltaX, y: deltaY });
+    movePiece(pieceData.id, worldDelta);
   }
 
   function handleLostPointerCapture() {

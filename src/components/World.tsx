@@ -1,7 +1,8 @@
-import { PieceItem } from './PieceItem';
 import { usePieceStore } from '@/stores/piece';
 import type { Camera } from '@/types/camera';
 import type { Piece } from '@/types/piece';
+
+import { PieceItem } from './PieceItem';
 
 import * as styles from './World.css';
 

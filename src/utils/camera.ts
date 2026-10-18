@@ -1,35 +1,31 @@
 import { MIN_ZOOM, MAX_ZOOM } from '@/constants/camera';
 import type { Camera } from '@/types/camera';
+import type { Point } from '@/types/piece';
 
 export function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
-export function viewportToWorld(
-  viewportX: number,
-  viewportY: number,
-  camera: Camera,
-): { worldX: number; worldY: number } {
-  const worldX = (viewportX - camera.panX) / camera.zoom;
-  const worldY = (viewportY - camera.panY) / camera.zoom;
+export function viewportToWorld(viewportPoint: Point, camera: Camera): Point {
+  const worldX = (viewportPoint.x - camera.panX) / camera.zoom;
+  const worldY = (viewportPoint.y - camera.panY) / camera.zoom;
 
   return {
-    worldX,
-    worldY,
+    x: worldX,
+    y: worldY,
   };
 }
 
-export function zoomAt(
+export function getZoomedCamera(
   camera: Camera,
-  viewportCoordinate: { viewportX: number; viewportY: number },
+  viewportPoint: Point,
   factor: number,
 ): Camera {
-  const { viewportX, viewportY } = viewportCoordinate;
-  const { worldX, worldY } = viewportToWorld(viewportX, viewportY, camera);
+  const worldPoint = viewportToWorld(viewportPoint, camera);
 
   const newZoom = clamp(camera.zoom * factor, MIN_ZOOM, MAX_ZOOM);
-  const newPanX = viewportX - worldX * newZoom;
-  const newPanY = viewportY - worldY * newZoom;
+  const newPanX = viewportPoint.x - worldPoint.x * newZoom;
+  const newPanY = viewportPoint.y - worldPoint.y * newZoom;
 
   return {
     panX: newPanX,

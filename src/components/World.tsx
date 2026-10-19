@@ -2,7 +2,7 @@ import { usePieceStore } from '@/stores/piece';
 import type { Camera } from '@/types/camera';
 import type { Piece } from '@/types/piece';
 
-import { PieceItem } from './PieceItem';
+import PieceItem from './PieceItem';
 
 import * as styles from './World.css';
 
@@ -10,7 +10,7 @@ type WorldProps = {
   camera: Camera;
 };
 
-export function World({ camera }: WorldProps) {
+export default function World({ camera }: WorldProps) {
   const pieces = usePieceStore(state => state.pieces);
   const { panX, panY, zoom } = camera;
 
@@ -22,7 +22,7 @@ export function World({ camera }: WorldProps) {
       }}
     >
       {pieces.map((piece: Piece) => (
-        <PieceItem key={piece.id} pieceData={piece} zoom={zoom} />
+        <PieceItem key={piece.id} piece={piece} zoom={zoom} />
       ))}
     </div>
   );

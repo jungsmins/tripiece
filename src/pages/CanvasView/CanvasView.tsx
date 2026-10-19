@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Viewport } from '@/components/Viewport';
+import Viewport from '@/components/Viewport';
 import { useCameraStore } from '@/stores/camera';
 import { usePieceStore } from '@/stores/piece';
 import { viewportToWorld } from '@/utils/camera';

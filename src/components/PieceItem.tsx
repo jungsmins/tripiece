@@ -3,14 +3,16 @@ import { useRef } from 'react';
 import { usePieceStore } from '@/stores/piece';
 import type { Piece } from '@/types/piece';
 
+import PieceCard from './PieceCard';
+
 import * as styles from './PieceItem.css';
 
 type PieceItemProps = {
-  pieceData: Piece;
+  piece: Piece;
   zoom: number;
 };
 
-export function PieceItem({ pieceData, zoom }: PieceItemProps) {
+export default function PieceItem({ piece, zoom }: PieceItemProps) {
   const movePiece = usePieceStore(state => state.movePiece);
   const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -34,7 +36,7 @@ export function PieceItem({ pieceData, zoom }: PieceItemProps) {
     };
     lastPointerRef.current = { x: e.clientX, y: e.clientY };
 
-    movePiece(pieceData.id, worldDelta);
+    movePiece(piece.id, worldDelta);
   }
 
   function handleLostPointerCapture() {
@@ -48,20 +50,10 @@ export function PieceItem({ pieceData, zoom }: PieceItemProps) {
       onPointerMove={handlePointerMove}
       onLostPointerCapture={handleLostPointerCapture}
       style={{
-        transform: `translate(${pieceData.position.x}px, ${pieceData.position.y}px)`,
+        transform: `translate(${piece.position.x}px, ${piece.position.y}px)`,
       }}
     >
-      <div className={styles.pieceHeader}>
-        <div className={styles.pieceType}>{pieceData.type}</div>
-        <p className={styles.pieceMode}>{pieceData.location?.kind}</p>
-      </div>
-      <div className={styles.pieceMain}>
-        <div className={styles.pieceTitle}>{pieceData.title}</div>
-        <p className={styles.pieceContent}>설명</p>
-      </div>
-      <div className={styles.pieceFooter}>
-        <p className={styles.pieceDuration}>{pieceData.durationMinutes}</p>
-      </div>
+      <PieceCard piece={piece} />
     </div>
   );
 }

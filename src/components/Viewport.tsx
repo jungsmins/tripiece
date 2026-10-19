@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { ZOOM_SENSITIVITY } from '@/constants/camera';
 import { useCameraStore } from '@/stores/camera';
 
-import { World } from './World';
+import World from './World';
 
 import * as styles from './Viewport.css';
 
@@ -11,7 +11,7 @@ type ViewportProps = {
   onViewportResize: (width: number, height: number) => void;
 };
 
-export function Viewport({ onViewportResize }: ViewportProps) {
+export default function Viewport({ onViewportResize }: ViewportProps) {
   const camera = useCameraStore(state => state.camera);
   const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);

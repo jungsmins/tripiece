@@ -42,8 +42,11 @@ export default function PieceCard({ piece }: PieceCardProps) {
           {formatDuration(durationMinutes)}
         </span>
       </div>
-      <h3 className={styles.title} title={title}>
-        {title ? title : '제목 없음'}
+      <h3
+        className={`${styles.title} ${title ? '' : styles.titlePlaceholder}`}
+        title={title}
+      >
+        {title || '제목 없음'}
       </h3>
       <div className={`${styles.content} ${styles.contentVariants[type]}`}>
         <div className={styles.empty}>{TYPE_META[type].empty}</div>
@@ -55,17 +58,9 @@ export default function PieceCard({ piece }: PieceCardProps) {
           height={12}
           strokeWidth={1.75}
         />
-        {location?.name ? (
-          <span className={styles.footerLabel} title={location.name}>
-            {location.name}
-          </span>
-        ) : (
-          <span
-            className={`${styles.footerLabel} ${styles.footerLabelMissing}`}
-          >
-            장소 미정
-          </span>
-        )}
+        <span className={styles.footerLabel} title={location?.name}>
+          {location?.name ? location.name : '장소 미정'}
+        </span>
       </div>
     </div>
   );

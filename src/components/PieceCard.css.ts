@@ -177,7 +177,3 @@ export const footerLabel = style({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 });
-
-export const footerLabelMissing = style({
-  color: '#c2410c',
-});

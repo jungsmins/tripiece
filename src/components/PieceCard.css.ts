@@ -1,4 +1,4 @@
-import { style, styleVariants } from '@vanilla-extract/css';
+import { createVar, style, styleVariants } from '@vanilla-extract/css';
 
 import { PIECE_WIDTH, PIECE_HEIGHT } from '@/constants/piece';
 
@@ -10,6 +10,8 @@ const CANVAS_BG = '#fafaf8';
 
 const NOTCH_WIDTH = '28px';
 const NOTCH_DEPTH = '9px';
+
+const borderColor = createVar();
 
 const typeAccent = {
   map: { color: '#2f7d6b', background: '#e1f1ec' },
@@ -26,12 +28,15 @@ export const card = style({
   width: PIECE_WIDTH,
   height: PIECE_HEIGHT,
   padding: '12px',
-  border: `1.5px solid ${LINE}`,
+  border: `1.5px solid ${borderColor}`,
+  vars: { [borderColor]: LINE },
   borderRadius: '14px',
   boxShadow: `0 3px 0 ${LINE}, 0 10px 18px rgba(43, 40, 36, 0.08)`,
 
   color: INK,
   backgroundColor: PAPER,
+
+  transition: 'border-color 120ms ease-out, box-shadow 120ms ease-out',
 
   '::before': {
     content: '""',
@@ -43,11 +48,13 @@ export const card = style({
     width: NOTCH_WIDTH,
     height: NOTCH_DEPTH,
     marginLeft: `calc(${NOTCH_WIDTH} / -2)`,
-    border: `1.5px solid ${LINE}`,
+    border: `1.5px solid ${borderColor}`,
     borderTop: 'none',
     borderRadius: `0 0 ${NOTCH_DEPTH} ${NOTCH_DEPTH}`,
 
     backgroundColor: CANVAS_BG,
+
+    transition: 'border-color 120ms ease-out',
   },
 
   '::after': {
@@ -59,13 +66,23 @@ export const card = style({
     width: NOTCH_WIDTH,
     height: NOTCH_DEPTH,
     marginLeft: `calc(${NOTCH_WIDTH} / -2)`,
-    border: `1.5px solid ${LINE}`,
+    border: `1.5px solid ${borderColor}`,
     borderTop: 'none',
     borderRadius: `0 0 ${NOTCH_DEPTH} ${NOTCH_DEPTH}`,
 
     backgroundColor: PAPER,
+
+    transition: 'border-color 120ms ease-out',
   },
 });
+
+export const cardDragging = style({
+  boxShadow: `0 3px 0 ${LINE}, 0 14px 24px rgba(43, 40, 36, 0.14)`,
+});
+
+export const cardDraggingVariants = styleVariants(typeAccent, accent => ({
+  vars: { [borderColor]: accent.color },
+}));
 
 export const header = style({
   display: 'flex',

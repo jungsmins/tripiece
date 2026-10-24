@@ -6,6 +6,7 @@ import * as styles from './PieceCard.css';
 
 type PieceCardProps = {
   piece: Piece;
+  isDragging: boolean;
 };
 
 const TYPE_META: Record<PieceType, { label: string; empty: string }> = {
@@ -25,11 +26,14 @@ function formatDuration(minutes: number) {
   return rest === 0 ? `${hours}시간` : `${hours}시간 ${rest}분`;
 }
 
-export default function PieceCard({ piece }: PieceCardProps) {
+export default function PieceCard({ piece, isDragging }: PieceCardProps) {
   const { type, title, durationMinutes, location } = piece;
+  const draggingClass = isDragging
+    ? `${styles.cardDragging} ${styles.cardDraggingVariants[type]}`
+    : '';
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${draggingClass}`}>
       <div className={styles.header}>
         <span
           className={`${styles.typeBadge} ${styles.typeBadgeVariants[type]}`}
